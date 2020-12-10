@@ -1,0 +1,17 @@
+{{ ansible_managed | comment }}
+
+[Unit]
+Description=HAProxy Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User={{ haproxy_exporter_system_user }}
+Group={{ haproxy_exporter_system_group }}
+ExecStart={{ haproxy_exporter_binary_dir }}/haproxy_exporter --haproxy.scrape-uri={{ haproxy_scrape_uri }} \
+         --web.listen-address={{ haproxy_exporter_listen_ip }}:{{ haproxy_exporter_listen_port }} \
+         --web.telemetry-path=/{{ metrics_path }}
+
+[Install]
+WantedBy=multi-user.target

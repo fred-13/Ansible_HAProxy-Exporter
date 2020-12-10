@@ -1,0 +1,7 @@
+---
+- hosts: haproxy_exporter-nodes
+  become: true
+  become_method: sudo
+  become_user: root
+  roles:
+  - haproxy_exporter

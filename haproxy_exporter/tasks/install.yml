@@ -1,0 +1,11 @@
+---
+
+- name: propagate locally distributed haproxy_exporter binary
+  copy:
+    src: "haproxy_exporter-{{ haproxy_exporter_version }}"
+    dest: "{{ haproxy_exporter_binary_dir }}/haproxy_exporter"
+    mode: 0755
+    owner: root
+    group: root
+  when: haproxy_exporter_binary_dir | length > 0
+  notify: restart haproxy_exporter

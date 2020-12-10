@@ -1,0 +1,27 @@
+---
+
+- name: Create the haproxy_exporter group
+  group:
+    name: "{{ haproxy_exporter_system_group }}"
+    state: present
+    system: true
+  when: haproxy_exporter_system_group != "root"
+
+- name: Create the haproxy_exporter user
+  user:
+    name: "{{ haproxy_exporter_system_user }}"
+    groups: "{{ haproxy_exporter_system_group }}"
+    append: true
+    shell: /sbin/nologin
+    system: true
+    create_home: false
+  when: haproxy_exporter_system_user != "root"
+
+- name: Copy the Node haproxy_exporter systemd service file
+  template:
+    src: haproxy_exporter.service.j2
+    dest: /etc/systemd/system/haproxy_exporter.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart haproxy_exporter

@@ -1,0 +1,8 @@
+[all]
+haproxy_exporter ansible_host=192.168.10.14 ansible_user=vagrant ip=192.168.10.14
+
+[haproxy_exporter-nodes]
+haproxy_exporter
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python
